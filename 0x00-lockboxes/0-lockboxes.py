@@ -6,6 +6,7 @@ Unlock Boxes problem of interview
 
 '''
 
+
 def canUnlockAll(boxes):
     '''
     Check if all bpoxes can be open

@@ -8,8 +8,7 @@ def minOperations(n):
         trying O(1)
     '''
     res = 0
-    if n == 2:
-        return 2
+
     if n % 2 == 0:
         # if the middle of the middle is odd
         if int(n / 2) % 2 == 0 and int(n / 2) > 2:
@@ -21,5 +20,3 @@ def minOperations(n):
             return int((n/2)+2)
 
     return res
-
-print(minOperations(12))

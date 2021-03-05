@@ -1,9 +1,9 @@
 #include "lists.h"
 
 /**
- * is_palindrome - checks if singly-linked list is a palindrome
- * @head: double pointer to head of list
- * Return: 1 if palindrome, 0 if not
+ * is_palindrome - doc
+ * @head: doc
+ * Return: doc
  */
 int is_palindrome(listint_t **head)
 {
@@ -38,9 +38,9 @@ int is_palindrome(listint_t **head)
 }
 
 /**
- * reverse - reverses a singly-linked list
- * @head: head of list to reverse
- * Return: new head of list
+ * reverse - doc
+ * @head: doc
+ * Return: doc
  */
 void reverse(listint_t **head)
 {

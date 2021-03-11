@@ -1,29 +1,40 @@
 #!/usr/bin/python3
-"""
-Code
-"""
-
+'''doc.'''
 import sys
 
-size = 0
-codes = {"200": 0, "301": 0, "400": 0, "401": 0,
-                "403": 0, "404": 0, "405": 0, "500": 0}
 
-try:
-    for i, line in enumerate(sys.stdin, 1):
-        splited = line.split(" ")
-        if len(splited) < 2:
-            continue
-        if splited[-2] in codes:
-            codes[splited[-2]] += 1
-        size += eval(splited[-1])
-        if i % 10 == 0:
-            print("File size: {}".format(size))
-            for key, value in sorted(codes.items()):
-                if value > 0:
-                    print("{}: {}".format(key, value))
-finally:
-    print("File size: {}".format(size))
-    for key, value in sorted(codes.items()):
-        if value > 0:
-            print("{}: {}".format(key, value))
+def get_match(line):
+    '''doc.'''
+    try:
+        line = line[:-1]
+        words = line.split(" ")
+        size[0] += int(words[-1])
+        code = int(words[-2])
+        if code in logs:
+            logs[code] += 1
+    except:
+        pass
+
+
+def p_stats():
+    '''doc'''
+    print("File size: {}".format(size[0]))
+    for k in sorted(logs.keys()):
+        if logs[k]:
+            print("{}: {}".format(k, logs[k]))
+
+
+if __name__ == "__main__":
+    size = [0]
+    logs = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
+    i = 1
+    try:
+        for line in sys.stdin:
+            get_match(line)
+            if i % 10 == 0:
+                p_stats()
+            i += 1
+    except KeyboardInterrupt:
+        p_stats()
+        raise
+    p_stats()

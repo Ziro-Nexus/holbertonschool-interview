@@ -8,22 +8,22 @@
 
 void menger(int level)
 {
-	int X, Y, d, x = 1;
+	int x, y, d, k = 1;
 
 	if (level >= 0)
 	{
-		for (X = 0; X < level; X++)
+		for (x = 0; x < level; x++)
 		{
-			x *= 3;
+			k *= 3;
 		}
 
-		for (X = 0; X < x; X++)
+		for (x = 0; x < k; x++)
 		{
-			for (Y = 0; Y < x; Y++)
+			for (y = 0; y < k; y++)
 			{
-				for (d = x / 3; d > 0; d /= 3)
+				for (d = k / 3; d > 0; d /= 3)
 				{
-					if ((X % (d * 3)) / d == 1 && (Y % (d * 3)) / d == 1)
+					if ((x % (d * 3)) / d == 1 && (y % (d * 3)) / d == 1)
 						break;
 				}
 				if (d)
@@ -31,10 +31,10 @@ void menger(int level)
 					putchar(' ');
 				} else
 				{
-					putchar('#');
+					putchar(' ');
 				}
 			}
-			printf("\n");
+			putchar('\n');
 		}
 	}
 }

@@ -8,33 +8,33 @@
 
 void menger(int level)
 {
-	int x, y, d, k = 1;
+	int ax, ay, d, dim = 1;
 
 	if (level >= 0)
 	{
-		for (x = 0; x < level; x++)
+		for (ax = 0; ax < level; ax++)
 		{
-			k *= 3;
+			dim *= 3;
 		}
 
-		for (x = 0; x < k; x++)
+		for (ax = 0; ax < dim; ax++)
 		{
-			for (y = 0; y < k; y++)
+			for (ay = 0; ay < dim; ay++)
 			{
-				for (d = k / 3; d > 0; d /= 3)
+				for (d = dim / 3; d > 0; d /= 3)
 				{
-					if ((x % (d * 3)) / d == 1 && (y % (d * 3)) / d == 1)
+					if ((ax % (d * 3)) / d == 1 && (ay % (d * 3)) / d == 1)
 						break;
 				}
 				if (d)
 				{
-					putchar(' ');
+					printf(" ");
 				} else
 				{
-					putchar(' ');
+					printf("#");
 				}
 			}
-			putchar('\n');
+			printf("\n");
 		}
 	}
 }

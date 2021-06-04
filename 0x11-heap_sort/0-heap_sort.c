@@ -2,8 +2,8 @@
 /**
  * swap - swaps elements
  *
- * @i: first element
- * @j: second element
+ * @i: first
+ * @j: second
  */
 void swap(int *i, int *j)
 {
@@ -12,7 +12,7 @@ void swap(int *i, int *j)
 	*j = temp;
 }
 /**
- * build_heap - builds heap out of array
+ * build_heap - builds heap
  *
  * @array: the array
  * @i: heap size
@@ -39,9 +39,7 @@ void build_heap(int *array, int i, int j, size_t size)
 	}
 }
 /**
- * heap_sort - sorts an array of integers in ascending order
- * using the Heap sort algorithm
- *
+ * heap_sort - sorts an array
  * @array: an unordered array
  * @size: Number of elements of the array
  */

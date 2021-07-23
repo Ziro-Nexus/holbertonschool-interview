@@ -1,60 +1,76 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include "sort.h"
 
+/**
+ * merge - merge elements of the an array
+ *
+ * @array: array to ordered
+ * @arr: an auxiliary array
+ * @start: start index
+ * @middle: middle index
+ * @end: end index
+ * Return: Nothing
+ */
+void merge(int *array, int *arr, int start, int middle, int end)
+{
+	int i, j, k;
+
+	printf("Merging...\n");
+	printf("[left]: ");
+	print_array(array + start, middle - start);
+	printf("[right]: ");
+	print_array(array + middle, end - middle);
+
+	for (i = start, j = middle, k = 0; i < middle && j < end; k++)
+		if (array[i] < array[j])
+			arr[k] = array[i++];
+		else
+			arr[k] = array[j++];
+	while (i < middle)
+		arr[k++] = array[i++];
+	while (j < end)
+		arr[k++] = array[j++];
+	for (i = start, k = 0; i < end; i++)
+		array[i] = arr[k++];
+
+	printf("[Done]: ");
+	print_array(array + start, end - start);
+}
 
 /**
- * merge_sort - use merge sorT
- * @array: array to sort
- * @size: size of array
+ * split - splits an array
+ *
+ * @array: array to ordered
+ * @arr: an auxiliary array
+ * @start: start index
+ * @end: end index
+ * Return: Nothing
+ */
+void split(int *array, int *arr, int start, int end)
+{
+	int middle;
+
+	if (end - start > 1)
+	{
+		middle = (end - start) / 2 + start;
+		split(array, arr, start, middle);
+		split(array, arr, middle, end);
+		merge(array, arr, start, middle, end);
+	};
+}
+
+/**
+ * merge_sort - sorts an array of integers in ascending order
+ * using the Merge Sort algorithm
+ *
+ * @array: array unordered
+ * @size: size of the array to ordered
+ * Return: Nothing
  */
 void merge_sort(int *array, size_t size)
 {
-	int *left, *right, *start = array, top;
-	size_t lsize = size / 2, rsize = size / 2 + size % 2;
-	static int *buffer, *alloc, idx, i;
+	int *arr;
 
-	if (array == NULL || size <= 1)
-		return;
-	top = 0;
-	if (buffer == NULL)
-	{
-		top = 1;
-		buffer = malloc(sizeof(int) * size);
-	}
-	alloc = buffer;
-	merge_sort(array, lsize);
-	merge_sort(array + lsize, rsize);
-	left = array;
-	right = array + lsize;
-	printf("Merging...\n[left]: ");
-	print_array(left, lsize);
-	printf("[right]: ");
-	print_array(right, rsize);
-	for (idx = 0; lsize > 0 && rsize > 0; idx++)
-	{
-		if (*left < *right)
-		{
-			buffer[idx] = *left;
-			left++;
-			lsize--;
-		}
-		else
-		{
-			buffer[idx] = *right;
-			right++;
-			rsize--;
-		}
-	}
-	idx--;
-	for (i = idx + 1; lsize; lsize--, left++, i++)
-		array[i] = *left;
-	for (i = idx + 1; rsize; rsize--, right++, i++)
-		array[i] = *right;
-	for (; idx >= 0; idx--)
-		array[idx] = buffer[idx];
-	printf("[Done]: ");
-	print_array(start, size);
-	if (top)
-		free(alloc);
+	arr = malloc(sizeof(int) * size);
+	split(array, arr, 0, size);
+	free(arr);
 }

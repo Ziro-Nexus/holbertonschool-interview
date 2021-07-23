@@ -1,91 +1,60 @@
+#include <stdlib.h>
+#include <stdio.h>
 #include "sort.h"
 
-/**
- * merge_sort - doc
- * @array: array of integers to sort
- * @size: size of the array of integers to sort
- *
- */
 
+/**
+ * merge_sort - use merge sorT
+ * @array: array to sort
+ * @size: size of array
+ */
 void merge_sort(int *array, size_t size)
 {
-	int *holder = malloc(sizeof(int) * size);
+	int *left, *right, *start = array, top;
+	size_t lsize = size / 2, rsize = size / 2 + size % 2;
+	static int *buffer, *alloc, idx, i;
 
-	if (holder == NULL)
+	if (array == NULL || size <= 1)
 		return;
-	if (size <= 1 || array == NULL)
+	top = 0;
+	if (buffer == NULL)
 	{
-		free(holder);
-		return;
+		top = 1;
+		buffer = malloc(sizeof(int) * size);
 	}
-	merge_sort_holder(array, size, holder);
-	free(holder);
-}
-
-/**
- * merge_sort_holder - doc
- * @array: array of integers to sort
- * @size: size of the array of integers to sort
- * @holder: temp array to hold information during merge
- */
-
-void merge_sort_holder(int *array, size_t size, int *holder)
-{
-	int mid = size / 2;
-
-	if (size <= 1)
-		return;
-
-	merge_sort_holder(array, mid, holder);
-	merge_sort_holder(&array[mid], size - mid, holder);
-	merge(holder, array, mid, size);
-}
-
-/**
- * merge - merges two subarrays together
- * @holder: temp array to hold information during merge
- * @array: array to merge
- * @mid: index of mid-point
- * @size: size of array to merge
- *
- */
-
-void merge(int *holder, int *array, int mid, size_t size)
-{
-	int left = 0, right = mid, index = 0;
-
+	alloc = buffer;
+	merge_sort(array, lsize);
+	merge_sort(array + lsize, rsize);
+	left = array;
+	right = array + lsize;
 	printf("Merging...\n[left]: ");
-	print_array(array, mid);
+	print_array(left, lsize);
 	printf("[right]: ");
-	print_array(&array[mid], size - mid);
-	while (left < mid && right < (int)size)
+	print_array(right, rsize);
+	for (idx = 0; lsize > 0 && rsize > 0; idx++)
 	{
-		if (array[left] <= array[right])
+		if (*left < *right)
 		{
-			holder[index] = array[left];
+			buffer[idx] = *left;
 			left++;
+			lsize--;
 		}
 		else
 		{
-			holder[index] = array[right];
+			buffer[idx] = *right;
 			right++;
+			rsize--;
 		}
-		index++;
 	}
-	while (left < mid)
-	{
-		holder[index] = array[left];
-		left++;
-		index++;
-	}
-	while (right < (int)size)
-	{
-		holder[index] = array[right];
-		right++;
-		index++;
-	}
-	for (index = 0; index < (int)size; index++)
-		array[index] = holder[index];
+	idx--;
+	for (i = idx + 1; lsize; lsize--, left++, i++)
+		array[i] = *left;
+	for (i = idx + 1; rsize; rsize--, right++, i++)
+		array[i] = *right;
+	for (; idx >= 0; idx--)
+		array[idx] = buffer[idx];
 	printf("[Done]: ");
-	print_array(array, size);
+	print_array(start, size);
+	if (top)
+		free(alloc);
 }
